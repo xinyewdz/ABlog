@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="base">
+    <sql id="dynamicWhere">
+        <foreach collection="whereMap" item="val" index="key" separator=" AND ">
+            <if test="val!=null">
+	            ${key}=#{val}
+            </if>
+        </foreach>
+    </sql>
+    <sql id="pageSql">
+        <if test="pagination!=null">
+            <if test="pagination.sortSql!=null">
+               order by ${pagination.sortSql}
+            </if>
+	        <if test="pagination.sortName!=null">
+	            order by ${pagination.sortName} ${pagination.sortOrder}
+	        </if>
+	        <if test="pagination.rowStart>-1">
+	            limit ${pagination.rowStart},${pagination.pageSize}
+	        </if>
+        </if>
+    </sql>
+</mapper>

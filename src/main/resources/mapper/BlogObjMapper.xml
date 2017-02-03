@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.BlogObjMapper">
+  <resultMap id="BaseResultMap" type="cn.aaron.ablog.obj.BlogObj">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="tags" jdbcType="VARCHAR" property="tags" />
+    <result column="content" jdbcType="LONGVARCHAR" property="content" />
+    <result column="content1" jdbcType="LONGVARCHAR" property="content1" />
+    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="updated_time" jdbcType="TIMESTAMP" property="updatedTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, title, tags, created_time, updated_time
+  </sql>
+  <select id="getByPK" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select   <include refid="Base_Column_List" />
+    from t_blog
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="getByPKWithContent" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select   <include refid="Base_Column_List" />,content,content1
+    from t_blog
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="delete" parameterType="java.lang.Long">
+    delete from t_blog
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="cn.aaron.ablog.obj.BlogObj">
+    insert into t_blog (id, title, tags,created_time, updated_time, content, content1)
+    values (#{id,jdbcType=BIGINT}, #{title,jdbcType=VARCHAR}, #{tags,jdbcType=VARCHAR}, 
+      #{createdTime,jdbcType=TIMESTAMP}, #{updatedTime,jdbcType=TIMESTAMP}, #{content,jdbcType=LONGVARCHAR},#{content1,jdbcType=LONGVARCHAR})
+  </insert>
+  
+  <update id="updateByContent" parameterType="cn.aaron.ablog.obj.BlogObj">
+    update t_blog
+    set title = #{title,jdbcType=VARCHAR},
+      tags = #{tags,jdbcType=VARCHAR},
+      created_time = #{createdTime,jdbcType=TIMESTAMP},
+      updated_time = #{updatedTime,jdbcType=TIMESTAMP},
+      content = #{content,jdbcType=LONGVARCHAR},
+      content1 = #{content1,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="update" parameterType="cn.aaron.ablog.obj.BlogObj">
+    update t_blog
+    set title = #{title,jdbcType=VARCHAR},
+      tags = #{tags,jdbcType=VARCHAR},
+      created_time = #{createdTime,jdbcType=TIMESTAMP},
+      updated_time = #{updatedTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
