@@ -24,7 +24,7 @@
     </property>
      <property name="freemarkerVariables">  
           <map>  
-              <entry key="contextPath" value=""></entry>  
+              <entry key="contextPath" value="/ablog"></entry>  
           </map>  
       </property>  
    

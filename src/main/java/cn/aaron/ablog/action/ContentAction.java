@@ -54,9 +54,11 @@ public class ContentAction extends BasePage {
 					String path = getBlogHtmlPath()+File.separator+id;
 					try {
 						byte[] contentBuff = FileUtil.readFile(path);
-						String blogHtmlContent = new String(contentBuff,"UTF-8");
-						request.setAttribute("blogHtml", blogHtmlContent);
-						request.setAttribute("blog", blog);
+						if(contentBuff!=null){
+							String blogHtmlContent = new String(contentBuff,"UTF-8");
+							request.setAttribute("blogHtml", blogHtmlContent);
+							request.setAttribute("blog", blog);
+						}
 					} catch (IOException e) {
 						log.error("error", e);
 					}

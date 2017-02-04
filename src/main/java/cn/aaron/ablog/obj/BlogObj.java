@@ -1,8 +1,12 @@
 package cn.aaron.ablog.obj;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class BlogObj {
+public class BlogObj implements Serializable{
+	
+	public static final int MAX_CONTENT_LENGTH = 65535;
+	
     private Long id;
 
     private String title;

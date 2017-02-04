@@ -27,13 +27,13 @@
     delete from t_blog
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="cn.aaron.ablog.obj.BlogObj">
+  <insert id="insert" parameterType="cn.aaron.ablog.obj.BlogObj" useGeneratedKeys="true"  keyProperty="id">
     insert into t_blog (id, title, tags,created_time, updated_time, content, content1)
     values (#{id,jdbcType=BIGINT}, #{title,jdbcType=VARCHAR}, #{tags,jdbcType=VARCHAR}, 
       #{createdTime,jdbcType=TIMESTAMP}, #{updatedTime,jdbcType=TIMESTAMP}, #{content,jdbcType=LONGVARCHAR},#{content1,jdbcType=LONGVARCHAR})
   </insert>
   
-  <update id="updateByContent" parameterType="cn.aaron.ablog.obj.BlogObj">
+  <update id="updateWithContent" parameterType="cn.aaron.ablog.obj.BlogObj">
     update t_blog
     set title = #{title,jdbcType=VARCHAR},
       tags = #{tags,jdbcType=VARCHAR},

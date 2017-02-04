@@ -1,0 +1,45 @@
+<#macro head> 
+	<#assign layout_head> <#nested /> </#assign> 
+
+</#macro>
+
+<#macro script> 
+	<#assign layout_script> <#nested /> </#assign> 
+</#macro>
+
+<#macro body>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<base href="${contextPath}/">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport"	content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<link rel="stylesheet" type="text/css" href="static/bootstrap/css/bootstrap.css" />
+<link rel="stylesheet" type="text/css" href="static/bootstrap/css/bootstrap-theme.css" />
+<script type="text/javascript" src="static/js/lib/jquery-2.1.4.js"></script>
+<script type="text/javascript" src="static/bootstrap/js/bootstrap.js"></script>
+<script type="text/javascript" src="static/js/lib/vue.js"></script>
+
+${layout_head}
+<script type="text/javascript">
+  var __contextPath = "${contextPath}";
+</script>
+</head>
+<body class="">
+	<header id="header">
+	
+	</header>
+	<aside id="left-panel">
+
+	</aside>
+
+	<div id="main" role="main">
+        <#nested />
+	</div>
+
+</body>
+</html>
+</#macro>
+
+
