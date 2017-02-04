@@ -1,18 +1,56 @@
 <#include "/global/base.html">
 <@head>
   <title>保存</title>
+  <script type="text/javascript" src="static/js/lib/commonmark.min.js"></script>
+  <style type="text/css">
+    .content{
+        display: inline-block;
+        height:500px;
+    }
+    .html{
+        display: inline-block;
+	    height: 414px;
+	    border: 1px solid #ccc;
+	    overflow: scroll;
+	    margin: 26px 0 0 0;
+	    float:right;
+	}
+  </style>
 </@head>
 <@body>
+     <#if errMsg??>
+        <div>${errMsg}</div>
+     </#if>
      <form class="form" action="blog/doSave" method="post" role="form" >
         <input type="hidden" name="id" value="${(blog.id)!}">
         <div class="form-group">
             <label for="title">标题</label><input id="title" type="text" name="title" class="form-control" value="${(blog.title)!}">
         </div>
-        <div class="form-group">
+        <div class="form-group content col-md-6">
             <label for="content">内容</label><textarea rows="20" cols="100" class="form-control" id="content" name="content">${(blog.fullContent)!}</textarea>
         </div>
+        <div class="html col-md-6" id="html">
+        
+        </div>
         <div class="form-group">
-            <button type="submit" class="btn btn-default">保存</button>
+            <button type="submit" class="btn btn-default saveBtn">保存</button>
         </div>
     </form>
+    <script type="text/javascript">
+    var reader = new commonmark.Parser();
+    var writer = new commonmark.HtmlRenderer();
+    init();
+    function init(){
+	    convertHtml();
+    	$("#content").on("blur",function(){
+    		convertHtml();
+    	});
+    }
+    function convertHtml(){
+    	var html = $("#html");
+    	 var parsed = reader.parse($("#content").val());
+         var result = writer.render(parsed); // result is a String
+         html.html(result);
+    }
+    </script>
 </@body>

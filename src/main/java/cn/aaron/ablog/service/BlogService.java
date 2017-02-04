@@ -1,5 +1,7 @@
 package cn.aaron.ablog.service;
 
+import java.io.File;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.utils.NoneUtil;
@@ -17,6 +19,9 @@ public class BlogService {
 	
 	@Autowired
 	private BlogDao blogDao;
+	
+	@Autowired
+	private SystemPropertyService systemPropertyService;
 
 	public BlogObj find(Long id,boolean withContent){
 		BlogObj obj = null;
@@ -52,6 +57,10 @@ public class BlogService {
 			count = blogDao.updateWithContent(obj);
 		}
 		return count;
+	}
+
+	public String getBlogHtmlPath(Long id){
+		return systemPropertyService.getProperty("blogHtml")+File.separator+id;
 	}
 	
 }

@@ -29,14 +29,7 @@ public class ContentAction extends BasePage {
 	private Logger log = Logger.getLogger(ContentAction.class);
 	
 	@Autowired
-	private SystemPropertyService systemPropertiesService;
-	
-	@Autowired
 	private BlogService blogService;
-	
-	public String getBlogHtmlPath(){
-		return systemPropertiesService.getProperty("blogHtml");
-	}
 	
 	@RequestMapping("/p/{id}")
 	public String printContent(HttpServletRequest request,@PathVariable("id") String id){
@@ -51,7 +44,7 @@ public class ContentAction extends BasePage {
 			if(_id>-1){
 				BlogObj blog = blogService.find(_id, false);
 				if(blog!=null){
-					String path = getBlogHtmlPath()+File.separator+id;
+					String path = blogService.getBlogHtmlPath(_id);
 					try {
 						byte[] contentBuff = FileUtil.readFile(path);
 						if(contentBuff!=null){
