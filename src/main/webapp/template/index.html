@@ -1,7 +1,28 @@
 <#include "/global/base.html">
 <@head>
-  <title>登录</title>
+  <title>首页</title>
 </@head>
 <@body>
-    hello world
+    <div>
+        <ul>
+	        <#list blogList as blog>
+	            <ol class="item">
+	               <div>
+	                   <div class="head">
+	                       <div class="title">${blog.title}</div><div class="datetime">${(blog.updatedTime)?string["yyyy/MM/dd hh:mm:ss"]}</div>
+	                   </div>
+	                   <div class="content">
+	                       <#assign len=(blog.content)?length>
+	                       <#if len&gt;50>
+		                       ${(blog.content)[0..50]}
+                               <#else>
+                               ${blog.content}	                           
+	                       </#if>
+	                   </div>
+	               </div>
+	            </ol>
+	        </#list>
+        
+        </ul>
+    </div>
 </@body>

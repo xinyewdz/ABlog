@@ -9,6 +9,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.utils.Pagination;
 
 /**
 *TODO
@@ -40,11 +41,18 @@ public abstract class BaseDao<T,PK extends Serializable> {
 		this.nameSpace = nameSpace;
 	}
 	
-	public List<T> find(Map<String, Object> map) {
+	public List<T> find(Map<String, Object> whereMap,Pagination pagination) {
 		SqlSession session = getSqlSession();
 		Map<String, Object> paraMap = new HashMap<String, Object>();
-		paraMap.put("whereMap", map);
+		paraMap.put("whereMap", whereMap);
+		if(pagination!=null){
+			paraMap.put("pagination", pagination);
+		}
 		return session.selectList(getNameSpace() + ".find", paraMap);
+	}
+	
+	public List<T> find(Map<String, Object> whereMap) {
+		return find(whereMap, null);
 	}
 	
 	public int update(T t) {

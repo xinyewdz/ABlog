@@ -15,10 +15,6 @@ public class BlogObj implements Serializable{
     
     private String content;
     
-    private String content1;
-    
-    private String fullContent;
-
     private Date createdTime;
 
     private Date updatedTime;
@@ -71,20 +67,4 @@ public class BlogObj implements Serializable{
 		this.content = content;
 	}
 
-	public String getContent1() {
-		return content1;
-	}
-
-	public void setContent1(String content1) {
-		this.content1 = content1;
-	}
-
-	public String getFullContent() {
-		return fullContent;
-	}
-
-	public void setFullContent(String fullContent) {
-		this.fullContent = fullContent;
-	}
-    
 }

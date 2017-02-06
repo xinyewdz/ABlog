@@ -64,7 +64,7 @@ public class BlogAction extends BasePage {
 		}
 		obj.setUpdatedTime(now);
 		obj.setTitle(title);
-		obj.setFullContent(content);
+		obj.setContent(content);
 		int count = blogService.save(obj);
 		if(count==0){
 			request.setAttribute("errMsg", "保存失败");

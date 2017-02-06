@@ -6,7 +6,6 @@
     <result column="title" jdbcType="VARCHAR" property="title" />
     <result column="tags" jdbcType="VARCHAR" property="tags" />
     <result column="content" jdbcType="LONGVARCHAR" property="content" />
-    <result column="content1" jdbcType="LONGVARCHAR" property="content1" />
     <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
     <result column="updated_time" jdbcType="TIMESTAMP" property="updatedTime" />
   </resultMap>
@@ -19,18 +18,28 @@
     where id = #{id,jdbcType=BIGINT}
   </select>
   <select id="getByPKWithContent" parameterType="java.lang.Long" resultMap="BaseResultMap">
-    select   <include refid="Base_Column_List" />,content,content1
+    select   <include refid="Base_Column_List" />,content
     from t_blog
     where id = #{id,jdbcType=BIGINT}
   </select>
+  
+  <select id="find" parameterType="map" resultMap="BaseResultMap">
+    select   <include refid="Base_Column_List" />,content
+    from t_blog
+    <where>
+        <include refid="base.dynamicWhere"></include>
+    </where>
+    <include refid="base.pageSql"></include>
+  </select>
+  
   <delete id="delete" parameterType="java.lang.Long">
     delete from t_blog
     where id = #{id,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="cn.aaron.ablog.obj.BlogObj" useGeneratedKeys="true"  keyProperty="id">
-    insert into t_blog (id, title, tags,created_time, updated_time, content, content1)
+    insert into t_blog (id, title, tags,created_time, updated_time, content)
     values (#{id,jdbcType=BIGINT}, #{title,jdbcType=VARCHAR}, #{tags,jdbcType=VARCHAR}, 
-      #{createdTime,jdbcType=TIMESTAMP}, #{updatedTime,jdbcType=TIMESTAMP}, #{content,jdbcType=LONGVARCHAR},#{content1,jdbcType=LONGVARCHAR})
+      #{createdTime,jdbcType=TIMESTAMP}, #{updatedTime,jdbcType=TIMESTAMP}, #{content,jdbcType=LONGVARCHAR})
   </insert>
   
   <update id="updateWithContent" parameterType="cn.aaron.ablog.obj.BlogObj">
@@ -40,7 +49,6 @@
       created_time = #{createdTime,jdbcType=TIMESTAMP},
       updated_time = #{updatedTime,jdbcType=TIMESTAMP},
       content = #{content,jdbcType=LONGVARCHAR},
-      content1 = #{content1,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
   <update id="update" parameterType="cn.aaron.ablog.obj.BlogObj">

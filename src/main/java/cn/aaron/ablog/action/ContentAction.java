@@ -1,6 +1,5 @@
 package cn.aaron.ablog.action;
 
-import java.io.File;
 import java.io.IOException;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,7 +15,6 @@ import org.utils.NoneUtil;
 import cn.aaron.ablog.base.impl.BasePage;
 import cn.aaron.ablog.obj.BlogObj;
 import cn.aaron.ablog.service.BlogService;
-import cn.aaron.ablog.service.SystemPropertyService;
 
 /**
 * TODO
