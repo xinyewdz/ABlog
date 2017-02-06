@@ -3,7 +3,8 @@
   <title>首页</title>
 </@head>
 <@body>
-    <div>
+    <div class="head">陌生人读书</div>
+    <div class="body">
         <ul>
 	        <#list blogList as blog>
 	            <ol class="item">
@@ -25,4 +26,6 @@
         
         </ul>
     </div>
+    <#assign date=("20160103 12:00:00"?datetime["yyyyMMdd hh:mm:ss"])>
+    ${date?string["yyyyMMdd hh:mm:ss"]}
 </@body>
