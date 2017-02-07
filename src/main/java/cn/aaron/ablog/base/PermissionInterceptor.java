@@ -39,6 +39,8 @@ public class PermissionInterceptor extends HandlerInterceptorAdapter{
 						permissionFlag = permission.value();
 					}
 				}
+				String path = request.getRequestURI();
+				log.info("PermissionInterceptor path="+path+" checkPermission="+permissionFlag);
 				if (!permissionFlag) {
 					if (page instanceof ApiPage) {
 						ApiResponse<String> apiResp = new ApiResponse<String>();
@@ -49,7 +51,7 @@ public class PermissionInterceptor extends HandlerInterceptorAdapter{
 						pw.flush();
 					}else if(page instanceof BasePage){
 						response.setContentType("text/html;charset=UTF-8");  
-				        response.setHeader("Location", "/admin/login");  
+				        response.setHeader("Location", request.getContextPath()+"/login");  
 				        response.setStatus(303);
 					}
 				}

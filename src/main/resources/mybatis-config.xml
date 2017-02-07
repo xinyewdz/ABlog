@@ -32,5 +32,6 @@
 	<mappers>
 	    <mapper resource="mapper/base.xml"/>
 	    <mapper resource="mapper/BlogObjMapper.xml"/>
+	    <mapper resource="mapper/UserObjMapper.xml"/>
 	</mappers>
 </configuration>

@@ -1,7 +1,6 @@
 package cn.aaron.ablog.action;
 
 import java.io.IOException;
-import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -59,7 +58,7 @@ public class ContentAction extends BasePage {
 				}
 			}
 		}
-		return "printContent";
+		return "/printContent";
 	}
 	
 }

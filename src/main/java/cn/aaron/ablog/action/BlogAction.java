@@ -67,7 +67,7 @@ public class BlogAction extends BasePage {
 		obj.setContent(content);
 		int count = blogService.save(obj);
 		if(count==0){
-			request.setAttribute("errMsg", "保存失败");
+			setErrMsg(request, "保存失败");
 			return "/blog/save";
 		}else{
 			log.info("doSave blog success.id="+id);

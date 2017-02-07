@@ -9,6 +9,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.log4j.Logger;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.utils.NoneUtil;
 import org.utils.Pagination;
 
 /**
@@ -53,6 +54,15 @@ public abstract class BaseDao<T,PK extends Serializable>{
 	
 	public List<T> find(Map<String, Object> whereMap) {
 		return find(whereMap, null);
+	}
+	
+	public T findOne(Map<String, Object> whereMap) {
+		List<T> list = find(whereMap);
+		T t = null;
+		if(!NoneUtil.isEmpty(list)){
+			t = list.get(0);
+		}
+		return t;
 	}
 	
 	public int update(T t) {

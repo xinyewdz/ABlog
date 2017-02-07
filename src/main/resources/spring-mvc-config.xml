@@ -40,7 +40,7 @@
  <mvc:interceptors>
     <mvc:interceptor>
       <mvc:mapping path="/api/**"/>
-      <mvc:mapping path="/admin/**"/>
+      <mvc:mapping path="/blog/**"/>
       <ref bean="permissionInterceptor"/>
     </mvc:interceptor>
   </mvc:interceptors>

@@ -18,9 +18,7 @@
   </style>
 </@head>
 <@body>
-     <#if errMsg??>
-        <div>${errMsg}</div>
-     </#if>
+     <@errMsg/>
      <form class="form" action="blog/doSave" method="post" role="form" >
         <input type="hidden" name="id" value="${(blog.id)!}">
         <div class="form-group">

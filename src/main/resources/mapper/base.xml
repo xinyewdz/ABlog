@@ -4,9 +4,7 @@
     <sql id="dynamicWhere">
         <if test="whereMap!=null">
 	        <foreach collection="whereMap" item="val" index="key" separator=" AND ">
-	            <if test="val!=null">
 		            ${key}=#{val}
-	            </if>
 	        </foreach>
         </if>
     </sql>

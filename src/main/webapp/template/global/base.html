@@ -32,5 +32,9 @@ ${layout_head}
 </body>
 </html>
 </#macro>
-
+<#macro errMsg>
+    <#if __errMsg??>
+    <div class="alert alert-danger" role="alert">${__errMsg}</div>
+    </#if>
+</#macro>
 
