@@ -1,16 +1,44 @@
 <#include "/global/base.html">
 <@head>
   <title>查看文章</title>
+  <style type="text/css">
+    .title{
+    font-family: '微软雅黑 Bold', '微软雅黑';
+    font-weight: 700;
+    font-style: normal;
+    font-size: 25px;
+    display: inline-block;
+    text-decoration: none;
+    }
+    .datetime {
+    margin: 10px 0 0 0;
+}
+    .datetime label {
+    font-weight: normal;
+    margin-right: 5px;
+}
+   .html_content {
+    border-top: solid 1px rgba(26, 187, 156, 1);
+    padding-top: 15px;
+}
+  </style>
 </@head>
 <@body>
-    <#if blog??>
-        <div class="title">
-            ${blog.title}
-        </div>
-        <div class="htmlContent">
-            ${blogHtml}
-        </div>
-        <#else>
-        blog not exist.
-    </#if>
+    <#include "/global/nav.html">
+    <div class="body">
+	    <#if blog??>
+	        <div class="title">
+	            ${blog.title}
+	        </div>
+	        <div class="datetime">
+	            <label>发表时间:</label><span>${(blog.createdTime)?string["yyyy/MM/dd hh:mm:ss"]}</span>
+	        </div>
+	        <div class="html_content">
+	            ${blogHtml}
+	        </div>
+	        <#else>
+	        blog not exist.
+	    </#if>
+    
+    </div>
 </@body>

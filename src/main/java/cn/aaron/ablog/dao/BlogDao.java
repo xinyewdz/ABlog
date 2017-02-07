@@ -24,5 +24,9 @@ public class BlogDao extends BaseDao<BlogObj, Long>{
 	public int updateWithContent(BlogObj obj){
 		return getSqlSession().update(getNameSpace()+".updateWithContent", obj);
 	}
+
+	public long findCount() {
+		return getSqlSession().selectOne(getNameSpace()+".findCount");
+	}
 	
 }

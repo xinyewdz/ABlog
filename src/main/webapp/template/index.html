@@ -1,21 +1,53 @@
 <#include "/global/base.html">
 <@head>
   <title>首页</title>
+  <style type="text/css">
+    ul,ol{
+    padding: 0;
+    margin: 0;
+    }
+    .item{
+        margin-top: 10px;
+    padding-bottom: 10px;
+    border-bottom: rgba(26, 187, 156, 1) solid 1px;
+    }
+    .item .head{
+        margin-bottom: 20px;
+    }
+    .item .title{
+        font-family: '微软雅黑 Bold', '微软雅黑';
+    font-weight: 700;
+    font-style: normal;
+    font-size: 25px;
+    display: inline-block;
+    text-decoration: none;
+    color: #000;
+    }
+    .item .datetime{
+    display: inline-block;
+    float: right;
+    margin-right: 15px;
+    }
+    .item .content{
+    
+    }
+  </style>
 </@head>
 <@body>
-    <div class="head">陌生人读书</div>
+    <#setting datetime_format="yyyy/MM/dd hh:mm:ss">
+    <#include "/global/nav.html">
     <div class="body">
         <ul>
 	        <#list blogList as blog>
 	            <ol class="item">
 	               <div>
-	                   <div class="head">
-	                       <div class="title">${blog.title}</div><div class="datetime">${(blog.updatedTime)?string["yyyy/MM/dd hh:mm:ss"]}</div>
+	                   <div class="head" >
+	                       <a class="title" href="p/${blog.id}">${blog.title}</a><span class="datetime">${blog.createdTime?datetime}</span>
 	                   </div>
 	                   <div class="content">
 	                       <#assign len=(blog.content)?length>
-	                       <#if len&gt;50>
-		                       ${(blog.content)[0..50]}
+	                       <#if len&gt;150>
+		                       ${(blog.content)[0..150]}
                                <#else>
                                ${blog.content}	                           
 	                       </#if>
@@ -23,9 +55,38 @@
 	               </div>
 	            </ol>
 	        </#list>
-        
         </ul>
-    </div>
-    <#assign date=("20160103 12:00:00"?datetime["yyyyMMdd hh:mm:ss"])>
-    ${date?string["yyyyMMdd hh:mm:ss"]}
+        <nav aria-label="Page navigation" id="navPage" data-count="${count}">
+		  <ul class="pagination">
+		    <li v-for="page in pages">
+		      <a v-bind:href="page.url">{{page.name}}</a>
+		    </li>
+		  </ul>
+		</nav>
+     </div>
+     <script type="text/javascript">
+     init();
+     function init(){
+    	 printPage();
+     }
+     
+     function printPage(){
+    	 var count = $("#navPage").data("count");
+    	 var pageCount = count/10;
+    	 if(count%10>0){
+    		 pageCount++;
+    	 }
+    	 var pageCon = $("#navPage>ul");
+    	 var pages = new Array();
+    	 for(var i=1;i<=pageCount;i++){
+    		 pages.push({"url":"?_rowStart="+(i-1)*10,"name":i});
+    	 }
+    	 var vPage = new Vue({
+    		 el:"#navPage",
+    		 data:{
+    			 pages:pages
+    		 }
+    	 });
+     }
+     </script>
 </@body>

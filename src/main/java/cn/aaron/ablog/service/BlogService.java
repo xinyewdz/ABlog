@@ -37,6 +37,11 @@ public class BlogService {
 		}
 		return obj;
 	}
+	
+	public long findCount(){
+		long total = blogDao.findCount();
+		return total;
+	}
 
 	public int save(BlogObj obj) {
 		int count = 0;

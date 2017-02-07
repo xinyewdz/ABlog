@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
-import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.log4j.Logger;
+import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.utils.Pagination;
 
@@ -16,21 +16,21 @@ import org.utils.Pagination;
 *@author Aaron
 *@date 2017年2月3日
 */
-public abstract class BaseDao<T,PK extends Serializable> {
+public abstract class BaseDao<T,PK extends Serializable>{
 
 	private Logger log = Logger.getLogger(BaseDao.class);
 
-	private SqlSessionFactory sqlSessionFactory;
+	private SqlSessionTemplate sqlSessionTemplate;
 
 	private String nameSpace;
 	
 	@Autowired
-	public void setSqlSessionFactory(SqlSessionFactory sqlSessionFactory) {
-		this.sqlSessionFactory = sqlSessionFactory;
+	public void setSqlSessionTemplate(SqlSessionTemplate sqlSessionTemplate) {
+		this.sqlSessionTemplate = sqlSessionTemplate;
 	}
 
 	public SqlSession getSqlSession() {
-		return sqlSessionFactory.openSession();
+		return sqlSessionTemplate;
 	}
 
 	public String getNameSpace() {

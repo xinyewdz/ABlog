@@ -1,6 +1,7 @@
 package cn.aaron.ablog.action;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -41,6 +42,7 @@ public class ContentAction extends BasePage {
 			}
 			if(_id>-1){
 				BlogObj blog = blogService.find(_id, false);
+				log.info("find blog success.id="+_id);
 				if(blog!=null){
 					String path = blogService.getBlogHtmlPath(_id);
 					try {
@@ -49,6 +51,7 @@ public class ContentAction extends BasePage {
 							String blogHtmlContent = new String(contentBuff,"UTF-8");
 							request.setAttribute("blogHtml", blogHtmlContent);
 							request.setAttribute("blog", blog);
+							log.info("find blog content success.id="+_id);
 						}
 					} catch (IOException e) {
 						log.error("error", e);
@@ -58,4 +61,5 @@ public class ContentAction extends BasePage {
 		}
 		return "printContent";
 	}
+	
 }

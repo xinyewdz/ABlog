@@ -8,7 +8,9 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.utils.HttpRequestUtil;
 import org.utils.Pagination;
+import org.utils.RequestParameterException;
 
 import cn.aaron.ablog.base.impl.BasePage;
 import cn.aaron.ablog.obj.BlogObj;
@@ -28,12 +30,16 @@ public class IndexAction extends BasePage {
 	private BlogService blogService;
 	
 	@RequestMapping("/")
-	public String index(HttpServletRequest request){
+	public String index(HttpServletRequest request) throws RequestParameterException{
+		int _rowStart = HttpRequestUtil.getInt(request, "_rowStart",0);
 		Pagination pagination = new Pagination();
 		pagination.setSortName("updated_time").setSortOrder(Pagination.SORT_ORDER_DESC);
-		pagination.setRowStart(0).setPageSize(10);
+		pagination.setRowStart(_rowStart).setPageSize(10);
 		List<BlogObj> list = blogService.findBlogList(pagination);
+		long count = blogService.findCount();
+		request.setAttribute("count", count);
 		request.setAttribute("blogList", list);
 		return "/index";
 	}
+	
 }
