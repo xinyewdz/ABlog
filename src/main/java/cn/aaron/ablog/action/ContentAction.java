@@ -5,6 +5,9 @@ import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
+import org.commonmark.node.Node;
+import org.commonmark.parser.Parser;
+import org.commonmark.renderer.html.HtmlRenderer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -46,12 +49,26 @@ public class ContentAction extends BasePage {
 					String path = blogService.getBlogHtmlPath(_id);
 					try {
 						byte[] contentBuff = FileUtil.readFile(path);
-						if(contentBuff!=null){
-							String blogHtmlContent = new String(contentBuff,"UTF-8");
-							request.setAttribute("blogHtml", blogHtmlContent);
-							request.setAttribute("blog", blog);
-							log.info("find blog content success.id="+_id);
+						if(contentBuff==null){
+							log.info("can't find blog html,will create it now.blogid="+_id);
+							//生成markdown
+							Parser parser = Parser.builder().build();
+							Node document = parser.parse(blog.getContent());
+							HtmlRenderer renderer = HtmlRenderer.builder().build();
+							String htmlContent = renderer.render(document);
+							try {
+								byte[] content = htmlContent.getBytes("UTF-8");
+								FileUtil.writeFile(path, content);
+								log.info("write html file success.id="+id);
+								contentBuff = content;
+							} catch (IOException e) {
+								log.error("write html file error.", e);
+							}
 						}
+						String blogHtmlContent = new String(contentBuff,"UTF-8");
+						request.setAttribute("blogHtml", blogHtmlContent);
+						request.setAttribute("blog", blog);
+						log.info("find blog content success.id="+_id);
 					} catch (IOException e) {
 						log.error("error", e);
 					}
