@@ -42,7 +42,8 @@
 	            <ol class="item">
 	               <div>
 	                   <div class="head" >
-	                       <a class="title" href="p/${blog.id}">${blog.title}</a><span class="datetime">${blog.createdTime?datetime}</span>
+	                       <div><a class="title" href="p/${blog.id}">${blog.title}</a><span class="datetime">${blog.createdTime?datetime}</span></div>
+	                       <div>阅读量: ${blog.viewCount}</div>
 	                   </div>
 	                   <div class="content">
 	                       <#assign len=(blog.content)?length>

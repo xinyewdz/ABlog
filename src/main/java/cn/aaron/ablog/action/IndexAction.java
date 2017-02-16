@@ -1,6 +1,9 @@
 package cn.aaron.ablog.action;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -9,11 +12,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.utils.HttpRequestUtil;
+import org.utils.NoneUtil;
 import org.utils.Pagination;
 import org.utils.RequestParameterException;
 
+import cn.aaron.ablog.action.vo.BlogVO;
 import cn.aaron.ablog.base.impl.BasePage;
 import cn.aaron.ablog.obj.BlogObj;
+import cn.aaron.ablog.obj.BlogStatisticsObj;
 import cn.aaron.ablog.service.BlogService;
 
 /**
@@ -35,10 +41,43 @@ public class IndexAction extends BasePage {
 		Pagination pagination = new Pagination();
 		pagination.setSortName("updated_time").setSortOrder(Pagination.SORT_ORDER_DESC);
 		pagination.setRowStart(_rowStart).setPageSize(10);
-		List<BlogObj> list = blogService.findBlogList(pagination);
+		List<BlogObj> list = blogService.listBlog(pagination,true);
+		List<BlogVO> blogList = null;
+		if(list!=null){
+			int len = list.size();
+			blogList = new ArrayList<BlogVO>(len);
+			Long[] blogIds = new Long[len];
+			for(int i=0;i<len;i++){
+				BlogObj obj = list.get(i);
+				blogIds[i] = obj.getId();
+			}
+			Map<Long, BlogStatisticsObj> statisticsMap = new HashMap<Long, BlogStatisticsObj>(len);
+			List<BlogStatisticsObj> statisticsList = blogService.listStatistics(blogIds);
+			if(!NoneUtil.isEmpty(statisticsList)){
+				for(int i=0,statisticsLen=statisticsList.size();i<statisticsLen;i++){
+					BlogStatisticsObj statisticsObj = statisticsList.get(i);
+					statisticsMap.put(statisticsObj.getBlogId(), statisticsObj);
+				}
+			}
+			for(int i=0;i<len;i++){
+				BlogObj obj = list.get(i);
+				BlogVO vo = new BlogVO();
+				vo.setId(obj.getId());
+				vo.setTitle(obj.getTitle());
+				vo.setTags(obj.getTags());
+				vo.setContent(obj.getContent());
+				vo.setCreatedTime(obj.getCreatedTime());
+				vo.setUpdatedTime(obj.getUpdatedTime());
+				BlogStatisticsObj statisticsObj = statisticsMap.get(obj.getId());
+				if(statisticsObj!=null){
+					vo.setViewCount(statisticsObj.getViewCount());
+				}
+				blogList.add(vo);
+			}
+		}
 		long count = blogService.findCount();
 		request.setAttribute("count", count);
-		request.setAttribute("blogList", list);
+		request.setAttribute("blogList", blogList);
 		return "/index";
 	}
 	

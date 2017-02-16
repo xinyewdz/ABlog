@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.BlogCommentObjMapper">
+  <resultMap id="BaseResultMap" type="cn.aaron.ablog.obj.BlogCommentObj">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="blog_id" jdbcType="BIGINT" property="blogId" />
+    <result column="nick_name" jdbcType="VARCHAR" property="nickName" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
+    <result column="updated_time" jdbcType="TIMESTAMP" property="updatedTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, blog_id, nick_name, email, content,created_time,updated_time
+  </sql>
+  <select id="getByPK" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_blog_comment
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="find" parameterType="map" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_blog_comment
+    <where>
+        <include refid="base.dynamicWhere"></include>
+    </where>
+     <include refid="base.pageSql"></include>
+  </select>
+  
+  <delete id="delete" parameterType="java.lang.Long">
+    delete from t_blog_comment
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="cn.aaron.ablog.obj.BlogCommentObj" useGeneratedKeys="true" keyProperty="id">
+    insert into t_blog_comment (id, blog_id, nick_name, email, content,created_time,updated_time)
+    values (#{id,jdbcType=BIGINT}, #{blogId,jdbcType=BIGINT}, #{nickName,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, #{createdTime,jdbcType=TIMESTAMP}, #{updatedTime,jdbcType=TIMESTAMP})
+  </insert>
+  <update id="update" parameterType="cn.aaron.ablog.obj.BlogCommentObj">
+    update t_blog_comment
+    set blog_id = #{blogId,jdbcType=BIGINT},
+      nick_name = #{nickName,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      content = #{content,jdbcType=VARCHAR},
+      created_time = #{createdTime,jdbcType=TIMESTAMP},
+      updated_time = #{updatedTime,jdbcType=TIMESTAMP},
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

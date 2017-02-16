@@ -1,44 +1,104 @@
 <#include "/global/base.html">
 <@head>
   <title>查看文章</title>
+  <link rel="stylesheet" type="text/css" href="static/css/blog/printComment.css"/>
   <style type="text/css">
-    .title{
-    font-family: '微软雅黑 Bold', '微软雅黑';
-    font-weight: 700;
-    font-style: normal;
-    font-size: 25px;
-    display: inline-block;
-    text-decoration: none;
-    }
-    .datetime {
-    margin: 10px 0 0 0;
-}
-    .datetime label {
-    font-weight: normal;
-    margin-right: 5px;
-}
-   .html_content {
-    border-top: solid 1px rgba(26, 187, 156, 1);
-    padding-top: 15px;
-}
+   
   </style>
 </@head>
 <@body>
+    <#setting datetime_format="yyyy/MM/dd hh:mm:ss">
     <#include "/global/nav.html">
     <div class="body">
-	    <#if blog??>
-	        <div class="title">
-	            ${blog.title}
-	        </div>
-	        <div class="datetime">
-	            <label>发表时间:</label><span>${(blog.createdTime)?string["yyyy/MM/dd hh:mm:ss"]}</span>
-	        </div>
-	        <div class="html_content">
-	            ${blogHtml}
-	        </div>
-	        <#else>
-	        blog not exist.
-	    </#if>
-    
+        <div class="blog">
+		    <#if blog??>
+		        <div class="title">
+		            ${blog.title}
+		        </div>
+		        <div class="outline">
+		            <span class="statistics"><span class="statistics-view">已读: ${blog.viewCount}</span><span class="statistics-comment"><a href="#commentContainer">${blog.commentCount} 条评论</a></span></span>
+		            <span class="date"><label>发表时间: </label><span>${(blog.createdTime)?string["yyyy/MM/dd hh:mm:ss"]}</span></span>
+		        </div>
+		        <div class="html_content">
+		            ${blogHtml}
+		        </div>
+		        <#else>
+		        blog not exist.
+		    </#if>
+        </div>
+        <div id="commentContainer" class="comment-container">
+            <div class="comment-write">
+                <form action="" id="commentForm">
+                    <input type="hidden" name="blogId" value="${blog.id}">
+	                <div><textarea name="content" row="10" id="content"></textarea></div>
+                    <div>
+                        <label for="nickName">昵称:</label><input name="nickName" type="text" id="nickName">
+                        <label for="email">邮箱:</label><input name="email" type="text" id="email">
+                        <button type="button" id="submitBtn" data-loading-text="提交中...">提交</button>
+                    </div>
+                </form>
+            </div>
+            <div class="comment-count">评论: ${blog.commentCount}</div>
+            <div class="comment-list" id="commentList">
+            <#if commentList??>
+                <ul>
+                    <ol class="comment" v-for="comment in commentList">
+			            <div class="comment-content"><span class="comment-nick">{{comment.nickName}}: </span>{{comment.content}}</div>
+			            <div class="comment-date">{{comment.createdTime}}</div>
+			        </ol>
+                <#list commentList as comment>
+                    <ol class="comment">
+                        <div class="comment-content"><span class="comment-nick">${comment.nickName}: </span>${comment.content}</div>
+                        <div class="comment-date">${comment.createdTime?datetime}</div>
+                    </ol>
+                    <#else>
+                    <div class="comment-no">暂无评论!</div>
+                </#list>
+                </ul>
+                <#else>
+                <div class="comment-no">暂无评论!</div>
+            </#if>
+            </div>
+        </div>
     </div>
+    <script type="text/javascript">
+      init();
+      function init(){
+    	  
+    	  initCommentWrite();
+    	  var commentList = new Vue({
+    		 el:"#commentList>ul",
+    		 data:{
+    			 commentList:[]
+    		 }
+    	  });
+    	  $("#submitBtn").on("click",function(){
+    		  var that = $(this);
+    		 that.button("loading");
+    		 var commentForm = $("#commentForm");
+    		 localStorage.setItem("nickName",commentForm[0].nickName.value);
+    		 localStorage.setItem("email",commentForm[0].email.value);
+    		 $.post("blog/comment/save",commentForm.serialize(),function(resp){
+   				 that.button("reset");
+    			 if(resp.errno=="0"){
+    				 var data = resp.data;
+    				 commentList.commentList.push(data);
+    				 $("#content").val("");
+    			 }else{
+    				 
+    			 }
+    		 });
+    	  });
+      }
+      function initCommentWrite(){
+    	  var nickName = localStorage.getItem("nickName");
+    	  if(nickName){
+    		  $("#nickName").val(nickName);
+    	  }
+    	  var email = localStorage.getItem("email");
+          if(email){
+              $("#email").val(email);
+          }
+      }
+    </script>
 </@body>

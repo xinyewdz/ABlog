@@ -24,6 +24,15 @@
   </select>
   
   <select id="find" parameterType="map" resultMap="BaseResultMap">
+    select   <include refid="Base_Column_List" />
+    from t_blog
+    <where>
+        <include refid="base.dynamicWhere"></include>
+    </where>
+    <include refid="base.pageSql"></include>
+  </select>
+  
+  <select id="findWithContent" parameterType="map" resultMap="BaseResultMap">
     select   <include refid="Base_Column_List" />,content
     from t_blog
     <where>
@@ -36,10 +45,34 @@
     select count(id) from t_blog
   </select>
   
+  <select id="findStatistics" parameterType="map" resultType="cn.aaron.ablog.obj.BlogStatisticsObj">
+    select blog_id,view_count,comment_count from t_blog_statistics
+    <where>
+        blog_id in(
+        <foreach collection="blogIds" item="id" separator=",">
+        #{id}
+        </foreach>
+        )
+    </where>
+  </select>
+  
+  <update id="updateViewStatistics" parameterType="map">
+    update t_blog_statistics set view_count=view_count+#{viewCount} where blog_id=#{blogId}
+  </update>
+  <update id="updateCommentStatistics" parameterType="map">
+    update t_blog_statistics set comment_count=comment_count+#{commentCount} where blog_id=#{blogId}
+  </update>
+  
   <delete id="delete" parameterType="java.lang.Long">
     delete from t_blog
     where id = #{id,jdbcType=BIGINT}
   </delete>
+  
+  <insert id="insertStatistics" parameterType="cn.aaron.ablog.obj.BlogStatisticsObj">
+    insert into t_blog_statistics (blog_id, view_count, comment_count)
+    values (#{blogId,jdbcType=BIGINT}, #{viewCount,jdbcType=BIGINT}, #{commentCount,jdbcType=BIGINT})
+  </insert>
+  
   <insert id="insert" parameterType="cn.aaron.ablog.obj.BlogObj" useGeneratedKeys="true"  keyProperty="id">
     insert into t_blog (id, title, tags,created_time, updated_time, content)
     values (#{id,jdbcType=BIGINT}, #{title,jdbcType=VARCHAR}, #{tags,jdbcType=VARCHAR}, 

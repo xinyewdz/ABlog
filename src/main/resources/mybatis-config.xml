@@ -33,5 +33,6 @@
 	    <mapper resource="mapper/base.xml"/>
 	    <mapper resource="mapper/BlogObjMapper.xml"/>
 	    <mapper resource="mapper/UserObjMapper.xml"/>
+	    <mapper resource="mapper/BlogCommentObjMapper.xml"/>
 	</mappers>
 </configuration>

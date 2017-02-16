@@ -1,3 +1,6 @@
+body {
+    margin: 0 0 20px 0;
+}
 .nav{
     background: rgba(26, 187, 156, 1);
 	position: fixed;
@@ -9,11 +12,20 @@
 	opacity: 0.9;
 }
 .nav>span{
-    margin-top: 20px;
 	display: inline-block;
-	margin-left: 15%;
 	font-size: large;
 	color: #fff;
+    width:100%;
+}
+.nav a {
+    display: inline-block;
+    cursor: pointer;
+    text-decoration: none;
+    width: 30%;
+    height: 70px;
+    padding-left: 15%;
+    padding-top: 20px;
+    color: #fff;
 }
 .body{
     margin-top: 70px;

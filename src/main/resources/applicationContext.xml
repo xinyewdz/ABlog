@@ -30,6 +30,13 @@
 	  <property name="dataSource" ref="dataSource" />
 	</bean>
 	
+	<!-- <bean id="gsonBean" class="org.springframework.http.converter.json.GsonFactoryBean">
+	   <property name="dateFormatPattern" value="yyyy-MM-dd hh:mm:ss"/>
+	</bean>
+	
+	<bean id="gsonConvert" class="org.springframework.http.converter.json.GsonHttpMessageConverter">
+	   <property name="gson" ref="gsonBean"/>
+	</bean> -->
 	<bean id="systemProperty" class="cn.aaron.ablog.base.SystemProperty">
 	   <constructor-arg index="0">
 	       <map>
