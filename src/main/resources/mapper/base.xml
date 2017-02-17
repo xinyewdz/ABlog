@@ -16,8 +16,8 @@
 	        <if test="pagination.sortName!=null">
 	            order by ${pagination.sortName} ${pagination.sortOrder}
 	        </if>
-	        <if test="pagination.rowStart>-1">
-	            limit ${pagination.rowStart},${pagination.pageSize}
+	        <if test="pagination.startRow>-1">
+	            limit ${pagination.startRow},${pagination.pageSize}
 	        </if>
         </if>
     </sql>

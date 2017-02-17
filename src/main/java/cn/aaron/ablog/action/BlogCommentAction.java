@@ -11,12 +11,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.utils.ApiResponse;
-import org.utils.ApiResponseCode;
-import org.utils.HttpRequestUtil;
-import org.utils.Pagination;
-import org.utils.RequestParameterException;
-import org.utils.gson.GsonUtil;
+import org.util.ApiResponse;
+import org.util.ApiResponseCode;
+import org.util.HttpRequestUtil;
+import org.util.Pagination;
+import org.util.RequestParameterException;
 
 import cn.aaron.ablog.base.impl.BasePage;
 import cn.aaron.ablog.obj.BlogCommentObj;

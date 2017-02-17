@@ -8,8 +8,8 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.utils.NoneUtil;
-import org.utils.Pagination;
+import org.util.NoneUtil;
+import org.util.Pagination;
 
 import cn.aaron.ablog.dao.BlogCommentDao;
 import cn.aaron.ablog.dao.BlogDao;

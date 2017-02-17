@@ -6,8 +6,8 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.utils.NoneUtil;
-import org.utils.SignatureUtil;
+import org.util.NoneUtil;
+import org.util.SignatureUtil;
 
 import cn.aaron.ablog.base.impl.BasePage;
 import cn.aaron.ablog.obj.UserObj;

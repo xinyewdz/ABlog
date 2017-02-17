@@ -9,8 +9,8 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.log4j.Logger;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.utils.NoneUtil;
-import org.utils.Pagination;
+import org.util.NoneUtil;
+import org.util.Pagination;
 
 /**
 *TODO

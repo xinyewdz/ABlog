@@ -10,9 +10,10 @@ import org.apache.log4j.Logger;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.ModelAndView;
-import org.utils.ApiResponse;
-import org.utils.ApiResponseCode;
-import org.utils.gson.GsonUtil;
+import org.util.ApiResponse;
+import org.util.ApiResponseCode;
+import org.util.RequestParameterException;
+import org.util.gson.GsonUtil;
 
 import cn.aaron.ablog.base.impl.BaseApiPage;
 import cn.aaron.ablog.base.impl.BasePage;

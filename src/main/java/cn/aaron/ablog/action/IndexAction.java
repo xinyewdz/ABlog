@@ -11,10 +11,10 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.utils.HttpRequestUtil;
-import org.utils.NoneUtil;
-import org.utils.Pagination;
-import org.utils.RequestParameterException;
+import org.util.HttpRequestUtil;
+import org.util.NoneUtil;
+import org.util.Pagination;
+import org.util.RequestParameterException;
 
 import cn.aaron.ablog.action.vo.BlogVO;
 import cn.aaron.ablog.base.impl.BasePage;
@@ -76,7 +76,8 @@ public class IndexAction extends BasePage {
 			}
 		}
 		long count = blogService.findCount();
-		request.setAttribute("count", count);
+		pagination.setTotalRow(count);
+		request.setAttribute("pagination", pagination);
 		request.setAttribute("blogList", blogList);
 		return "/index";
 	}

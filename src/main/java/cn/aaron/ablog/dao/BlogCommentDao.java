@@ -1,7 +1,5 @@
 package cn.aaron.ablog.dao;
 
-import java.util.List;
-
 import org.springframework.stereotype.Repository;
 
 import cn.aaron.ablog.dao.base.BaseDao;

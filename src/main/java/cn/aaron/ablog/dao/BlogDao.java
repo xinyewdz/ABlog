@@ -5,10 +5,9 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Repository;
-import org.utils.Pagination;
+import org.util.Pagination;
 
 import cn.aaron.ablog.dao.base.BaseDao;
-import cn.aaron.ablog.obj.BlogCommentObj;
 import cn.aaron.ablog.obj.BlogObj;
 import cn.aaron.ablog.obj.BlogStatisticsObj;
 

@@ -57,9 +57,9 @@
 	            </ol>
 	        </#list>
         </ul>
-        <nav aria-label="Page navigation" id="navPage" data-count="${count}">
+        <nav aria-label="Page navigation" id="navPage" data-totalpage="${pagination.totalPage}" data-currentpage="${pagination.currentPage}" data-pagesize="${pagination.pageSize}">
 		  <ul class="pagination">
-		    <li v-for="page in pages">
+		    <li v-for="page in pages" v-bind:class="page.className">
 		      <a v-bind:href="page.url">{{page.name}}</a>
 		    </li>
 		  </ul>
@@ -72,22 +72,25 @@
      }
      
      function printPage(){
-    	 var count = $("#navPage").data("count");
-    	 var pageCount = count/10;
-    	 if(count%10>0){
-    		 pageCount++;
-    	 }
-    	 var pageCon = $("#navPage>ul");
+    	 var totalPage = $("#navPage").data("totalpage");
+    	 var pageSize = $("#navPage").data("pagesize");
     	 var pages = new Array();
-    	 for(var i=1;i<=pageCount;i++){
-    		 pages.push({"url":"?_rowStart="+(i-1)*10,"name":i});
+    	 var currentPage = $("#navPage").data("currentpage");
+    	 for(var i=1;i<=totalPage;i++){
+    		 var data = {"url":"?_rowStart="+(i-1)*pageSize,"name":i};
+    		 if(currentPage==i){
+    			 data["className"] = "active";
+    		 }else{
+    			 data["className"] = "";
+    		 }
+    		 pages.push(data);
     	 }
     	 var vPage = new Vue({
-    		 el:"#navPage",
-    		 data:{
-    			 pages:pages
-    		 }
-    	 });
+             el:"#navPage",
+             data:{
+                 pages:pages
+             }
+         });
      }
      </script>
 </@body>
