@@ -110,7 +110,7 @@
     	  if(loadingComment||!moreComment){
     		  return;
     	  }
-    	  var len = $(".comment").length;
+    	  var len = $(".comment").length+1;
     	  var blogId = $("#commentList").data("blogid");
     	  loadingComment = true;
     	  $.get("blog/comment/list",{
