@@ -10,7 +10,7 @@
 	<context:component-scan base-package="cn.aaron.ablog" />
 	<!-- 启用注解 -->
 	<context:annotation-config />
-	<!-- 必须配置在annotation-driven前面，否则会自动生成adapter定义。自定义的就无法起作用了。 -->
+	<!-- 必须配置在annotation-driven前面，否则会自动生成adapter定义。自定义的就无法起作用了-->
 	<bean id="requestMappingHadlerAdapter"	class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
 		<property name="messageConverters">
 			<list>

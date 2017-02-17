@@ -116,7 +116,6 @@ public class BlogAction extends BasePage {
 			setErrMsg(request, "请求的内容不存在!");
 			return page;
 		}
-		blogService.updateViewStatistics(_id, 1);
 		String path = blogService.getBlogHtmlPath(_id);
 		try {
 			byte[] contentBuff = FileUtil.readFile(path);
@@ -158,9 +157,12 @@ public class BlogAction extends BasePage {
 			Pagination pagination = new Pagination();
 			pagination.setPageSize(10);
 			pagination.setRowStart(0);
+			pagination.setSortName("created_time");
+			pagination.setSortOrder(Pagination.SORT_ORDER_DESC);
 			List<BlogCommentObj> commentList = blogService.listComment(_id, pagination);
 			request.setAttribute("commentList", commentList);
 			log.info("find blog content success.id="+_id);
+			blogService.updateViewStatistics(_id, 1);
 		} catch (IOException e) {
 			log.error("error", e);
 		}

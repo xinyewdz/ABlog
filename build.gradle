@@ -65,7 +65,6 @@ processResources{
 }
 
 sourceSets{
-    println "hello world ${username}"
     //srcs = ["properties/jdbc-${env}.properties"]
 }
 

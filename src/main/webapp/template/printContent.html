@@ -39,7 +39,7 @@
                 </form>
             </div>
             <div class="comment-count">评论: ${blog.commentCount}</div>
-            <div class="comment-list" id="commentList">
+            <div class="comment-list" id="commentList" data-blogid="${blog.id}">
             <#if commentList??>
                 <ul>
                     <ol class="comment" v-for="comment in commentList">
@@ -54,6 +54,10 @@
                     <#else>
                     <div class="comment-no">暂无评论!</div>
                 </#list>
+                    <ol class="comment" v-for="comment in moreList">
+                        <div class="comment-content"><span class="comment-nick">{{comment.nickName}}: </span>{{comment.content}}</div>
+                        <div class="comment-date">{{comment.createdTime}}</div>
+                    </ol>
                 </ul>
                 <#else>
                 <div class="comment-no">暂无评论!</div>
@@ -62,18 +66,18 @@
         </div>
     </div>
     <script type="text/javascript">
+   	  var commentList = new Vue({
+   		 el:"#commentList>ul",
+   		 data:{
+   			 commentList:[],
+   			 moreList:[]
+   		 }
+   	  });
       init();
       function init(){
-    	  
     	  initCommentWrite();
-    	  var commentList = new Vue({
-    		 el:"#commentList>ul",
-    		 data:{
-    			 commentList:[]
-    		 }
-    	  });
     	  $("#submitBtn").on("click",function(){
-    		  var that = $(this);
+    		 var that = $(this);
     		 that.button("loading");
     		 var commentForm = $("#commentForm");
     		 localStorage.setItem("nickName",commentForm[0].nickName.value);
@@ -84,12 +88,51 @@
     				 var data = resp.data;
     				 commentList.commentList.push(data);
     				 $("#content").val("");
+    				 $(".comment-no").hide();
     			 }else{
     				 
     			 }
     		 });
     	  });
+    	  var wHeight = $(window).height();
+    	  var dHeight = $(document).height();
+    	  $(window).scroll(function(){
+    		  var scrollTop = $(document).scrollTop();
+    		  if((scrollTop+wHeight+100)>dHeight){
+    			  loadMoreComment();
+    		   }
+    	  });
+    	  
       }
+      var moreComment = true;
+      var loadingComment = false;
+      function loadMoreComment(){
+    	  if(loadingComment||!moreComment){
+    		  return;
+    	  }
+    	  var len = $(".comment").length;
+    	  var blogId = $("#commentList").data("blogid");
+    	  loadingComment = true;
+    	  $.get("blog/comment/list",{
+    		  blogId:blogId,
+    		  _rowStart:len,
+    		  _pageSize:10
+    	  },function(resp){
+    		  loadingComment = false;
+    		  if(resp.errno=="0"){
+	    		  var data = resp.data;
+	    		  if(data.length>0){
+	    			  moreComment = true;
+	    			  data.forEach(function(ele,idx){
+			              commentList.moreList.push(ele);
+	    			  });
+	    		  }else{
+	    			  moreComment = false;
+	    		  }
+    		  }
+    	  });
+      }
+      
       function initCommentWrite(){
     	  var nickName = localStorage.getItem("nickName");
     	  if(nickName){
