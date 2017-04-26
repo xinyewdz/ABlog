@@ -95,6 +95,10 @@
     				 commentList.commentList.push(data);
     				 $("#content").val("");
     				 $(".comment-no").hide();
+             zhuge.track("添加评论",{
+              "blogId":__blogId,
+              "commentUser":commentForm.nickName
+             });
     			 }else{
     				 
     			 }
