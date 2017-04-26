@@ -39,6 +39,7 @@
     var writer = new commonmark.HtmlRenderer();
     init();
     function init(){
+        zhuge.track('保存文章');
 	    convertHtml();
     	$("#content").on("blur",function(){
     		convertHtml();

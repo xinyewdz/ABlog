@@ -66,6 +66,9 @@
         </div>
     </div>
     <script type="text/javascript">
+      var __blogId = "${blog.title}";
+    </script>
+    <script type="text/javascript">
    	  var commentList = new Vue({
    		 el:"#commentList>ul",
    		 data:{
@@ -75,6 +78,9 @@
    	  });
       init();
       function init(){
+        zhuge.track('查看文章内容',{
+          "blogId":__blogId
+        });
     	  initCommentWrite();
     	  $("#submitBtn").on("click",function(){
     		 var that = $(this);
